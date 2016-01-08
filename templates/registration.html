@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Registration{% endblock %}
+{% block css %}{% endblock %}
+{% block body %}
+    <form method="POST">
+        {{ form.csrf_token }}
+        {{ form.nickname(placeholder='Nickname') }}
+        <div class="error" id="error_nickname"></div><br>
+        {{ form.password(placeholder='Password') }}
+        <div class="error" id="error_password"></div><br>
+        {{ form.confirm_password(placeholder='Retype password') }}
+        <div class="error" id="error_confirm_password"></div><br>
+        {{ form.email(placeholder='Email') }}
+        <div class="error" id="error_email"></div><br>
+        {{ form.phone(placeholder='Phone') }}
+        <div class="error" id="error_phone"></div><br>
+        {{ form.first_name(placeholder='First name') }}
+        <div class="error" id="error_first_name"></div><br>
+        {{ form.last_name(placeholder='Last Name') }}
+        <div class="error" id="error_last_name"></div><br>
+    <input type="submit" class="form-submit">
+    </form>
+{% endblock %}
+{% block script %}
+    <script src="{{ url_for('static', filename='js/registration.js') }}"></script>
+{% endblock %}

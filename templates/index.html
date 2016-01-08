@@ -5,5 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    ...
+    {% for user in users %}
+        {{ user.nickname }}
+    {% endfor %}
+    <a href="{{ url_for('registration') }}">Registration</a>
 {% endblock %}
