@@ -34,6 +34,22 @@ class User(db.Model):
 
     advertisements = db.relationship('Advertisement', secondary='user_advertisement')
 
+    @classmethod
+    def is_authenticated(self):
+        return True
+
+    @classmethod
+    def is_active(self):
+        return True
+
+    @classmethod
+    def is_anonymous(self):
+        return False
+
+    @classmethod
+    def get_id(self):
+        return unicode(self.id)
+
 
 class Advertisement(db.Model):
 
