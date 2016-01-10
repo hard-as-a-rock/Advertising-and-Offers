@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block css %}{% endblock %}
+
+{% block body %}
+    <form method="POST">
+        {{ form.csrf_token }}
+        {{ form.nickname(placeholder='Nickname') }}
+        <div class="error" id="error_nickname"></div><br>
+        {{ form.password(placeholder='Password') }}
+        <div class="error" id="error_password"></div><br>
+        <p>
+            <input type="checkbox" class="filled-in" id="filled-in-box" name="remember_me" checked="checked" />
+            <label for="filled-in-box">Remember me</label>
+        </p>
+        <input type="submit" class="form-submit">
+    </form>
+{% endblock %}
+{% block script %}
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+{% endblock %}

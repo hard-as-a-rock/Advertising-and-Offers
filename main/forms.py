@@ -76,3 +76,40 @@ class UserForm(Form):
             Length(min=5, max=12),
             UniqueValidator(User, User.phone)]
     )
+
+
+class LoginForm(Form):
+    nickname = StringField(
+        'username',
+        validators=[
+            DataRequired()
+        ]
+    )
+    password = PasswordField(
+        'password',
+        validators=[
+            DataRequired()
+        ]
+    )
+
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
+        self.user = None
+
+    def validate(self):
+        rv = Form.validate(self)
+        if not rv:
+            return False
+
+        user = User.query.filter_by(
+            nickname=self.nickname.data).first()
+        if user is None:
+            self.nickname.errors.append('Unknown username')
+            return False
+
+        if not user.password == self.password.data:
+            self.password.errors.append('Invalid password')
+            return False
+
+        self.user = user
+        return True

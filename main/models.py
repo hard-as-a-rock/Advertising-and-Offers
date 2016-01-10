@@ -1,7 +1,7 @@
 from app import db
 
 from sqlalchemy_utils import PasswordType
-
+from flask.ext.login import UserMixin
 ROLE_USER = 0
 ROLE_ADMIN = 1
 
@@ -14,7 +14,7 @@ class UserAdvertisement(db.Model):
                                  primary_key=True)
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     nickname = db.Column(db.String(length=64), nullable=False, unique=True)
     password = db.Column(PasswordType(
@@ -34,21 +34,24 @@ class User(db.Model):
 
     advertisements = db.relationship('Advertisement', secondary='user_advertisement')
 
-    @classmethod
+    def __repr__(self):
+        return '<User %r>' % (self.nickname)
+
+    @property
+    def get_id(self):
+        return unicode(self.id)
+
+    @property
     def is_authenticated(self):
         return True
 
-    @classmethod
+    @property
     def is_active(self):
         return True
 
-    @classmethod
+    @property
     def is_anonymous(self):
         return False
-
-    @classmethod
-    def get_id(self):
-        return unicode(self.id)
 
 
 class Advertisement(db.Model):
